@@ -1,4 +1,4 @@
-package org.sseptp.hostelmanagementsystem.logic;
+package org.sseptp.hostelmanagementsystem.logic.models;
 
 public class Room {
     private String roomName;

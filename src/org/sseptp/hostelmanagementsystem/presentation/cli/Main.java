@@ -1,20 +1,22 @@
 package org.sseptp.hostelmanagementsystem.presentation.cli;
 
 import org.sseptp.hostelmanagementsystem.data.arraylist.ArrayListRoomDao;
-import org.sseptp.hostelmanagementsystem.logic.Room;
-import org.sseptp.hostelmanagementsystem.logic.RoomDao;
+import org.sseptp.hostelmanagementsystem.logic.RoomServiceImpl;
+import org.sseptp.hostelmanagementsystem.logic.infrastructure.RoomService;
+import org.sseptp.hostelmanagementsystem.logic.models.Room;
+import org.sseptp.hostelmanagementsystem.logic.infrastructure.RoomDao;
 
 public class Main {
     public static final int ADD_ROOM_MENU_ITEM = 1;
-    public static final int SHOW_ROOMS_MENU_ITEMS = 2;
+    public static final int SHOW_ROOMS_MENU_ITEM = 2;
     public static final int EXIT_MENU_ITEM = 3;
+    private static final int NO_MENU_ITEM_SELECTED = 0;
 
     public static void main(String[] args) {
+        int chosenMenuItem = NO_MENU_ITEM_SELECTED;
         Menu menuItems = new Menu();
-        RoomDao roomDao = new ArrayListRoomDao();
+        RoomService roomService = new RoomServiceImpl();
         UserInputReader inputReader = new UserInputReader();
-        menuItems.show();
-        int chosenMenuItem = inputReader.chooseMenuItem();
 
         while (chosenMenuItem != EXIT_MENU_ITEM) {
             menuItems.show();
@@ -25,10 +27,10 @@ public class Main {
                     String roomName = inputReader.readRoomName();
                     Room newRoom = new Room();
                     newRoom.setRoomName(roomName);
-                    roomDao.add(newRoom);
+                    roomService.add(newRoom);
                     break;
-                case SHOW_ROOMS_MENU_ITEMS:
-                    for (Room currentRoom : roomDao.getAll()) {
+                case SHOW_ROOMS_MENU_ITEM:
+                    for (Room currentRoom : roomService.getAll()) {
                         System.out.println(currentRoom);
                     }
                     break;
